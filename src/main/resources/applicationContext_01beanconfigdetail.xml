@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+"
+>
+    <context:component-scan base-package="org.RicardoPluto._01beanconfidetail"></context:component-scan>
+
+    <bean id="ScopeBean" scope="prototype" class="org.RicardoPluto._01beanconfidetail.ScopeBean"></bean>
+   <!--生命周期：
+   创建：ApplicationContext，创建完容器立即创建bean，
+   初始化：方法需要我们指定，init-method=""配置，进行初始化操作
+   调用Bean方法，hello
+   销毁,方法需要我们指定，释放资源-->
+    <bean id="LifeCycleBean" init-method="init" destroy-method="destroy" class="org.RicardoPluto._01beanconfidetail.LifeCycleBean"></bean>
+</beans>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       https://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       https://www.springframework.org/schema/aop/spring-aop.xsd
+"
+>
+    <!--事务管理器-->
+    <bean id="txManager" class="org.RicardoPluto._05aop._01xml.TxManager"></bean>
+    <!--真实对象-->
+    <bean id="userService" class="org.RicardoPluto._05aop._01xml.UserServiceImpl"></bean>
+    <!--通过aop实现调用真实对象的逻辑额外加入事务管理的功能-->
+    <aop:config><!--aop配置-->
+        <aop:pointcut id="pointcut" expression="execution(* org.RicardoPluto._05aop._01xml.I*Service.*(..))"/>
+        <aop:aspect ref="txManager">
+            <!--配置环绕通知的处理-->
+            <aop:around method="around" pointcut-ref="pointcut"/>
+        </aop:aspect>
+    </aop:config>
+
+</beans>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+"
+>
+    <!--静态工厂方式 把返回值作为一个bean纳入到spring管理-->
+    <bean id="car" class="org.RicardoPluto._02beanconfigmethod.CarFactory" factory-method="createCar"></bean>
+    <!--&lt;!&ndash;传统方式&ndash;&gt;
+    <bean id="car" class="org.RicardoPluto._02beanconfigmethod.Car"></bean>-->
+    <!--工厂对象-->
+    <bean id="BusFactory" class="org.RicardoPluto._02beanconfigmethod.BusFactory"></bean>
+    <!--调用工厂对象的普通方法，把返回值当作一个bean-->
+    <bean id="bus" factory-bean="BusFactory" factory-method="createBus"></bean>
+
+    <!--Factory Bean
+        spring在创建bean时候发现了这个bean实现了FactoryBean接口，就会调用GETOBJECT方法，同时把bean作为返回值返回
+    -->
+    <bean id="fly" class="org.RicardoPluto._02beanconfigmethod.FlyFactoryBean"></bean>
+</beans>

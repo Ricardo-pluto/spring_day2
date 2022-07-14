@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+"
+>
+    <!--1 构造函数注入，如果不指定索引，名称、类型，默认按照构造函数参数索引来，如果类型不匹配会报错-->
+    <!--1.1构造函数注入：基本属性，通过参数索引值注入,和放的顺序没有关系只和索引值有关-->
+    <!-- <bean id="myBean" class="org.RicardoPluto._03di.MyBean">
+
+         <constructor-arg index="1" value="zs"/>
+         <constructor-arg index="0" value="1"/>
+         <constructor-arg index="2" value="1"/>
+     </bean>-->
+    <!--1.2 构造函数注入：基本属性，通过参数类型注入,同一个类型有顺序关系-->
+    <!--<bean id="myBean" class="org.RicardoPluto._03di.MyBean">
+        <constructor-arg type="java.lang.Long" value="1"/>
+        <constructor-arg type="java.lang.Long" value="2"/>
+        <constructor-arg type="java.lang.String" value="zs"/>
+    </bean>-->
+    <!--1.3构造函数注入：基本属性，通过参数名注入,和写的顺序无关，建议使用这种-->
+    <!--<bean id="myBean" class="org.RicardoPluto._03di.MyBean">
+        <constructor-arg name="idd" value="1"/>
+        <constructor-arg name="name" value="zs"/>
+        <constructor-arg name="id" value="2"/>
+    </bean>-->
+    <!-- 2 构造函数注入：引用其他bean-->
+    <!-- 2.1 构造函数注入：引用其他bean  外部bean可以被多个bean依赖注入-->
+    <!--<bean id="department" class="org.RicardoPluto._03di.Department">
+        <constructor-arg value="1"></constructor-arg>
+        <constructor-arg value="屌丝部"></constructor-arg>
+    </bean>
+    <bean id="employee" class="org.RicardoPluto._03di.Employee">
+        <constructor-arg value="1"></constructor-arg>
+        <constructor-arg value="zs"></constructor-arg>
+        <constructor-arg ref="department"></constructor-arg>
+    </bean>-->
+    <!-- 2.2 构造函数注入：引用其他bean  内部bean，只能在本bean中使用-->
+    <!-- <bean id="employee" class="org.RicardoPluto._03di.Employee">
+         <constructor-arg value="1"></constructor-arg>
+         <constructor-arg value="zs"></constructor-arg>
+         <constructor-arg>
+             <bean class="org.RicardoPluto._03di.Department">
+                 <constructor-arg value="1"></constructor-arg>
+                 <constructor-arg value="屌丝部"></constructor-arg>
+             </bean>
+         </constructor-arg>
+     </bean>-->
+
+    <!--其实昨天属性注入也有有外部bean和内部bean，昨天用的是外部bean，下面是内部bean-->
+    <!--<bean id="employee" class="org.RicardoPluto._03di.Employee">
+        <property name="id" value="1"></property>
+        <property name="name" value="zs"></property>
+        <property name="department">
+            <bean class="org.RicardoPluto._03di.Department">
+                <constructor-arg value="1"></constructor-arg>
+                <constructor-arg value="屌丝部"></constructor-arg>
+            </bean>
+        </property>
+    </bean>-->
+
+    <!--3 复杂属性注入-->
+    <bean id="complexBean" class="org.RicardoPluto._03di.ComplexBean">
+        <!--基本属性-->
+        <property name="id" value="1"></property>
+        <property name="name" value="zs"></property>
+        <property name="sex" value="true"></property>
+        <property name="salary" value="10000"></property>
+
+        <!--对象属性注入-->
+        <!--单个对象-->
+        <property name="otherBean">
+            <bean class="org.RicardoPluto._03di.OtherBean">
+                <property name="id" value="1"></property>
+                <property name="name" value="jfjjfj"></property>
+            </bean>
+        </property>
+        <!--多个属性 list<String> List<其他对象> Set<String> Set对象 array(String) array(其他对象)-->
+        <!-- private String[] arrays;-->
+        <property name="arrays" ><!-- 简写value="zs,ls,ww"-->
+            <array>
+                <value>zs</value>
+                <value>ls</value>
+                <value>ww</value>
+            </array>
+        </property>
+        <property name="otherBeanArrays" ><!-- 简写value="zs,ls,ww"-->
+            <array>
+                <bean class="org.RicardoPluto._03di.OtherBean">
+                    <property name="id" value="1"> </property>
+                    <property name="name" value="zs"> </property>
+                </bean>
+            </array>
+        </property>
+
+        <property name="set">
+            <set>
+                <value>zs</value>
+                <value>zs</value>
+                <value>zs</value>
+                <value>zs</value>
+            </set>
+        </property>
+        <property name="otherBeanSet">
+            <set>
+                <bean class="org.RicardoPluto._03di.OtherBean">
+                    <property name="id" value="1"> </property>
+                    <property name="name" value="zs"> </property>
+                </bean>
+                <bean class="org.RicardoPluto._03di.OtherBean">
+                    <property name="id" value="2"> </property>
+                    <property name="name" value="ls"> </property>
+                </bean>
+            </set>
+        </property>
+        <!-- <property name="props1">
+             <value>
+                 key1=value1
+                 key1=value1
+                 key1=value1
+             </value>
+         </property>-->
+        <property name="props1">
+            <props>
+                <prop key="key1">value1</prop>
+                <prop key="key2">value2</prop>
+            </props>
+        </property>
+
+        <property name="map1">
+            <map>
+                <entry key="key1" value="value1"/>
+                <entry key="key2" value="value2"/>
+                <entry key="key3" value="value3"/>
+            </map>
+        </property>
+        <property name="map2">
+            <map>
+                <entry key="key1">
+                    <bean class="org.RicardoPluto._03di.OtherBean">
+                        <property name="id" value="1"></property>
+                        <property name="name" value="zs"></property>
+                    </bean>
+                </entry>
+                <entry key="key2">
+                    <bean class="org.RicardoPluto._03di.OtherBean">
+                        <property name="id" value="2"></property>
+                        <property name="name" value="ls"></property>
+                    </bean>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+</beans>
